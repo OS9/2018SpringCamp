@@ -1,16 +1,16 @@
 var screenCanvas,info;
 var run = true;
-var fps = 50;
+var fps = 30;
 var ctx;
 var x = 256;
 var y = 128;
-var down = false;
 var up = false;
-var count = 0;
 
 //main
 window.onload = function() {
     var counter = 0;
+    upcount = 0;
+    downcount = 0;
     
     //スクリーン初期化
     screenCanvas = document.getElementById('screen');
@@ -26,7 +26,6 @@ window.onload = function() {
     //エレメント関連
     info = document.getElementById('info');
 
-
     (function(){
 
         //HTML更新
@@ -37,26 +36,22 @@ window.onload = function() {
 
         switch(true){
             case counter < 1000:
-            counter ++;
+            counter++;
             break;
 
             default:
             run = false;
             break;
         }
-        
-        /*
-        switch(true){
-            case up = true:
-            y--;
-            count++;
-            break;
 
-            case down = true:
+        //ジャンプ
+        if(up == true && upcount < 50){
+            y--;
+            upcount++;
+        }else if(up == true && downcount < 50){
             y++;
-            count --;
-            break;
-        }*/
+            downcount++
+        }
 
         //パス設定開始
         ctx.beginPath();
