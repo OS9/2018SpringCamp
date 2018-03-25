@@ -3,15 +3,15 @@ var run = true;
 var fps = 30;
 var ctx;
 var x = 256;
-var y = 128;
+var y = 200;
 var up = false;
+var right = false;
 
 //main
 window.onload = function() {
     var counter = 0;
-    upcount = 0;
-    downcount = 0;
-    
+    var upcount = 0;
+    var i,j;
     //スクリーン初期化
     screenCanvas = document.getElementById('screen');
     screenCanvas.width = 512;
@@ -26,6 +26,48 @@ window.onload = function() {
     //エレメント関連
     info = document.getElementById('info');
 
+
+    /*//ボタン
+    var input_key_buffer = new Array();
+    //押されたとき
+    document.onkeydown = function (e){
+        if(!e) e = window.event;
+        console.log("ボタンが押された");
+        input_key_buffer[e.keyCode] = true;
+    };
+    //離れたとき
+    document.onkeyup = function (e){
+        if(!e) e = window.event;
+        console.log("ボタンが離れた");
+        input_key_buffer[e.keyCode] = false;
+    };
+    //ウィンドウが非アクティブ
+    window.onblur = function(){
+        //配列をクリア
+        input_key_buffer.length = 0;
+    };
+
+    function KeyIsDown(keyCode){
+        if(input_key_buffer[key_code])      return true;
+        return false;
+    }
+
+    setInterval(fanction(){
+        if(KeyIsDown(37)){
+            console.log("←キーが押されている");
+        }else{
+            console.log("←キーが離されている");
+        }
+
+        //スペースキーが押されている
+        if(KeyIsDown(39)){
+            console.log("→キーが押されている");
+        }else{
+            console.log("→キーが離されている");
+        }
+    });*/
+
+
     (function(){
 
         //HTML更新
@@ -34,6 +76,7 @@ window.onload = function() {
         // screenクリア 
         ctx.clearRect(0, 0, screenCanvas.width, screenCanvas.height);
 
+        //カウンター
         switch(true){
             case counter < 1000:
             counter++;
@@ -44,14 +87,30 @@ window.onload = function() {
             break;
         }
 
-        //ジャンプ
-        if(up == true && upcount < 50){
+        /*//ジャンプ
+        if(up == true){
             y--;
-            upcount++;
-        }else if(up == true && downcount < 50){
-            y++;
-            downcount++
+            var huga = 0;
+            var hoge = setInterval(function() {
+                huga++;
+                y++;
+                //終了条件
+                if (huga == 1) {
+                    clearInterval(hoge);
+                }
+            }, 100);
+            // while(upcount<50) {
+            //     upcount++;
+            // }
+            // do{
+            //     y++;
+            //     upcount--;
+            // }while(upcount == -1);{
+            //     upcount++
+            //     up = false;
+            // }
         }
+*/
 
         //パス設定開始
         ctx.beginPath();
@@ -71,10 +130,13 @@ function keyDown(event){
     // キーコードを取得
     var key = event.keyCode;
     // ←キー
-    if(key === 37){x-=50; console.log('x');}
+    if(key === 37){x-=5; console.log('x');}
     // →キー
-    if(key === 39){x+=50; console.log('x');}
+    if(key === 39){x+=5; console.log('x');}
     // ↑キー
     if(key === 38){up = true; console.log('y');
     }
+}
+
+function jump(j){
 }
