@@ -1,8 +1,7 @@
 var screenCanvas,info;
 var run = true;
-var fps = 100;
+var fps = 50;
 var ctx;
-var jump = false;
 var x = 256;
 var y = 128;
 var down = false;
@@ -12,12 +11,6 @@ var count = 0;
 //main
 window.onload = function() {
     var counter = 0;
-    if(count < 10 && count > 10){
-        up = true;
-        c;
-    }else{
-        down = true;
-    }
     
     //スクリーン初期化
     screenCanvas = document.getElementById('screen');
@@ -51,7 +44,8 @@ window.onload = function() {
             run = false;
             break;
         }
-
+        
+        /*
         switch(true){
             case up = true:
             y--;
@@ -62,7 +56,7 @@ window.onload = function() {
             y++;
             count --;
             break;
-        }
+        }*/
 
         //パス設定開始
         ctx.beginPath();
@@ -86,6 +80,6 @@ function keyDown(event){
     // →キー
     if(key === 39){x+=50; console.log('x');}
     // ↑キー
-    if(key === 38){up = true && count ++; console.log('y');
+    if(key === 38){up = true; console.log('y');
     }
 }
