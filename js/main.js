@@ -9,6 +9,10 @@ var y_pre = 0;
 var y_nex = 0;
 var message;
 var start = true;
+const stageX = 600;
+const stageY = 550;
+// stageのx座標
+var stage_now_x = 0;
 
 //main
 window.onload = function() {
@@ -29,22 +33,25 @@ window.onload = function() {
     //エレメント関連
     info = document.getElementById('info');
 
-      //ランダム地形を配列に保存
+    //ランダム地形を配列に保存
     var rndLnd = [20];
     for (let i = 0; i < rndLnd.length; i++) {
-        var drwRnd = (Math.random()*9) + 1;
+        var drwRnd = (Math.random()*1) + 3;
         rndLnd[i] = drwRnd;        
     }
+
 
     var timer = setInterval(function() {
         //HTML更新
         info.innerHTML = 'SCORE ' + message;
-    
+        
         // screenクリア 
         ctx.clearRect(0, 0, screenCanvas.width, screenCanvas.height);
-
+        
         //経過時間と開始判定
         if(start == true){
+            //ステージ 
+            updateStage(rndLnd);
             do{
                 switch(true){
                     case (x > 0 && x < 600 && y > 0):
@@ -70,11 +77,11 @@ window.onload = function() {
                         y=540;
                         break;     
                 }
+                //ジャンプ
+                jump();
             }while(i>0);  
         }
 
-        //ジャンプ
-        jump();
 
         //パス設定開始
         ctx.beginPath();
@@ -88,8 +95,6 @@ window.onload = function() {
         
         ctx.closePath;
         
-        //ステージ 
-        updateStage(rndLnd);
 
         if (!run) clearInterval(timer);
     }, fps);
@@ -119,43 +124,37 @@ function keyDown(event){
 }
 
 //ステージ
-var stage = 0;
-var stageX = 600;
-var stageY = 550;
-// let rand = (Math.random() * 50) + 1;
-function drawRoad(/*rand*/) {
+function drawRoad(drw_nmb) {
     ctx.beginPath();
     ctx.fillRect(
-        stage = stageX -= 20,
-        stage = stageY/* + rand*/,
-        20,256
+        stage_now_x,stageY/* + rand*/,
+        100*drw_nmb,50
     );
     ctx.closePath();
 }
 
-function vanishRoad() {
+function nextRoad(drw_nmb) {
+    let drwRd = stage_now_x+100*(drw_nmb-1);
     ctx.beginPath();
     ctx.fillRect(
-        stage = stageX -= 20,
-        stage = 600,
-        20,256
+        drwRd+100*drw_nmb,stageY/* + rand*/,
+        100*drw_nmb,50
     );
-    ctx.closePath();    
+    ctx.closePath();
 }
 
 function drawStage(drw_nmb) {
-    for (let num = 0; num < drw_nmb; num++) {        
-        drawRoad();
-    }
-    vanishRoad();
-    if(stageX==0) {
-        stageX=screenCanvas.width;
+    drawRoad(drw_nmb);
+    nextRoad(drw_nmb+1);
+    if(stage_now_x < -(100*drw_nmb+100*(drw_nmb+1)*2)) {
+        stage_now_x=screenCanvas.width;
     }
 }
 
 var stageX_speed = 20;
 function moveStage() {
-    stageX += stageX_speed;
+    stage_now_x -= stageX_speed;
+
 }
 
 function generateStage(rndLnd) {
@@ -173,7 +172,7 @@ function updateStage(rndLnd) {
 function jump(){
     if (up) {
         y_nex = y;
-        y += (y-y_pre)+1;
+        y += (y-y_pre)+2;
         y_pre = y_nex;
         if(y==150) {
             up = !up;
