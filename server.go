@@ -1,29 +1,15 @@
 package main
 
 import (
-  "net/http"
-  "text/template"
+    "os"
+    "fmt"
+    "text/template"
 )
 
-type Page struct {
-  Title string
-  Count int
-}
-
-func viewHandler(w http.ResponseWriter, r *http.Request) {
-  page := Page{"Hello World.", 1}
-  tmpl, err := template.ParseFiles("loop.html") // ParseFilesを使う
-  if err != nil {
-    panic(err)
-  }
-
-  err = tmpl.Execute(w, page)
-  if err != nil {
-    panic(err)
-  }
-}
-
 func main() {
-  http.HandleFunc("/", viewHandler) // hello
-  http.ListenAndServe(":8080", nil)
+	var t = template.Must(template.ParseFiles("loop.html")) // 外部テンプレートファイルの読み込み
+    
+	if err := t.Execute(os.Stdout, nil); err != nil { // テンプレート出力
+        fmt.Println(err.Error())
+    }
 }

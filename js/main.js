@@ -5,6 +5,9 @@ var ctx;
 var x = 256;
 var y = 200;
 var up = false;
+var right = false;
+var y_pre = 0;
+var y_nex = 0;
 
 //main
 window.onload = function() {
@@ -38,8 +41,21 @@ window.onload = function() {
         info.innerHTML = 'SCORE ' + counter;
         
         // screenクリア 
-        ctx.clearRect(0, 0, screenCanvas.width, screenCanvas.height);        
-        
+        ctx.clearRect(0, 0, screenCanvas.width, screenCanvas.height);
+
+        //カウンター
+        switch(true){
+            case counter < 500:
+            counter++;
+            break;
+
+            default:
+            run = false;
+            break;
+        }
+
+        jump();
+
         //パス設定開始
         ctx.beginPath();
         
@@ -71,7 +87,8 @@ function keyDown(event){
     // →キー
     if(key === 39){x+=5; console.log('x');}
     // ↑キー
-    if(key === 38){up = true; console.log('y');}
+    if(key === 38){up = true; y_pre = y; y = y - 20; console.log('y');
+    }
 }
 
 
@@ -124,4 +141,19 @@ function generateStage(rndLnd) {
 function updateStage(rndLnd) {
     generateStage(rndLnd);
     moveStage();
+}
+
+// ジャンプ処理
+function jump(){
+    if (up) {
+        y_nex = y;
+        y += (y-y_pre)+1;
+        y_pre = y_nex;
+        if(y==50) {
+            up = !up;
+        }
+        if(y>200) {
+            y = 200;
+        }
+    }
 }
