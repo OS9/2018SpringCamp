@@ -1,6 +1,6 @@
 var screenCanvas,info;
 var run = true;
-var fps = 200;
+var fps = 50;
 var ctx;
 var x = 60;
 var y = 540;
@@ -117,7 +117,6 @@ function keyDown(event){
         counter = 0;
     }
 }
-
 
 //ステージ
 var stage = 0;
