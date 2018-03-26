@@ -2,12 +2,13 @@ var screenCanvas,info;
 var run = true;
 var fps = 200;
 var ctx;
-var x = 256;
-var y = 200;
+var x = 60;
+var y = 540;
 var up = false;
-var right = false;
 var y_pre = 0;
 var y_nex = 0;
+var message;
+var start = true;
 
 //main
 window.onload = function() {
@@ -16,8 +17,8 @@ window.onload = function() {
     
     //スクリーン初期化
     screenCanvas = document.getElementById('screen');
-    screenCanvas.width = 512;
-    screenCanvas.height = 256;
+    screenCanvas.width = 600;
+    screenCanvas.height = 600;
     
     //2dコンテキスト
     ctx = screenCanvas.getContext('2d');
@@ -27,33 +28,52 @@ window.onload = function() {
     
     //エレメント関連
     info = document.getElementById('info');
-    
-    //ランダム地形を配列に保存
+
+      //ランダム地形を配列に保存
     var rndLnd = [20];
     for (let i = 0; i < rndLnd.length; i++) {
         var drwRnd = (Math.random()*9) + 1;
         rndLnd[i] = drwRnd;        
     }
-    
-    (function(){
-        counter++;
+
+    var timer = setInterval(function() {
         //HTML更新
-        info.innerHTML = 'SCORE ' + counter;
-        
+        info.innerHTML = 'SCORE ' + message;
+    
         // screenクリア 
         ctx.clearRect(0, 0, screenCanvas.width, screenCanvas.height);
 
-        //カウンター
-        switch(true){
-            case counter < 500:
-            counter++;
-            break;
+        //経過時間と開始判定
+        if(start == true){
+            do{
+                switch(true){
+                    case (x > 0 && x < 512 && y > 0):
+                        counter++
+                        message = counter;
+                        break;
+                        
+                    // Game Over and Restart
+                    case start == true: 
+                        message = "GAME OVER";
+                        counter = 0;
+                        start = false;
+                        //自機の初期位置
+                        x=60;
+                        y=540;
+                        break;
 
-            default:
-            run = false;
-            break;
+                    // First Start
+                    case start == true:
+                        counter=0;
+                        //自機の初期位置
+                        x=60;
+                        y=540;
+                        break;     
+                }
+            }while(i>0);  
         }
 
+        //ジャンプ
         jump();
 
         //パス設定開始
@@ -71,12 +91,8 @@ window.onload = function() {
         //ステージ 
         updateStage(rndLnd);
 
-        //色を設定
-        ctx.fillStyle = 'red';
-        ctx.fill();
-        
-        if(run){setTimeout(arguments.callee,fps);}
-    })();
+        if (!run) clearInterval(timer);
+    }, fps);
 };
 
 function keyDown(event){
@@ -89,13 +105,24 @@ function keyDown(event){
     // ↑キー
     if(key === 38){up = true; y_pre = y; y = y - 20; console.log('y');
     }
+    //ESCキー
+    if(key === 27){
+        console.log("stop");
+        start = false;
+    }
+    //スペースキー　リスタート
+    if(key === 32){
+        console.log("start");
+        start = true;
+        counter = 0;
+    }
 }
 
 
 //ステージ
 var stage = 0;
-var stageX = 512;
-var stageY = 210;
+var stageX = 600;
+var stageY = 550;
 // let rand = (Math.random() * 50) + 1;
 function drawRoad(/*rand*/) {
     ctx.beginPath();
@@ -111,7 +138,7 @@ function vanishRoad() {
     ctx.beginPath();
     ctx.fillRect(
         stage = stageX -= 20,
-        stage = 256,
+        stage = 600,
         20,256
     );
     ctx.closePath();    
@@ -123,7 +150,7 @@ function drawStage(drw_nmb) {
     }
     vanishRoad();
     if(stageX==0) {
-        stageX=512;
+        stageX=screenCanvas.width;
     }
 }
 
@@ -149,11 +176,11 @@ function jump(){
         y_nex = y;
         y += (y-y_pre)+1;
         y_pre = y_nex;
-        if(y==50) {
+        if(y==150) {
             up = !up;
         }
-        if(y>200) {
-            y = 200;
+        if(y>540) {
+            y = 540;
         }
     }
 }
