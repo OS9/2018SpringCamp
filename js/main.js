@@ -1,6 +1,6 @@
 var screenCanvas,info;
 var run = true;
-var fps = 200;
+var fps = 50;
 var ctx;
 var x = 256;
 var y = 200;
@@ -44,42 +44,23 @@ window.onload = function() {
         ctx.clearRect(0, 0, screenCanvas.width, screenCanvas.height);
 
         //カウンター
-        //counter++;
         //経過時間と開始判定
         if(start == true){
             do{
-                /*if( x < 0 || x > 512 || y < 0){
-                    message = "GAME OVER";
-                    start = false;
-                    x=256;
-                    y=200;
-                    break;
-                }*/
-
+                y++;
                 switch(true){
-                    case (x > 0 && x < 512 && y > 0):
+                    case (x > 0 && x < 512 && y < 256):
                         counter++
                         message = counter;
                         break;
                         
                     case start == true: 
-                        //(x < 0 || x > 512 || y < 0):
                         message = "GAME OVER";
                         counter = 0;
                         start = false;
                         x=256;
                         y=200;
                         break;
-
-                    /*case counter < 500:
-                        message = counter;
-                        break;
-                    
-                    case counter < 600:
-                        message = counter + "  GAME OVER";
-                        start = false;
-                        break;
-                    */
 
                     case start == true:
                         counter=0;
@@ -132,7 +113,6 @@ function keyDown(event){
         counter = 0;
     }
 }
-
 
 //ステージ
 var stage = 0;
