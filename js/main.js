@@ -91,31 +91,6 @@ window.onload = function() {
 
         jump();
 
-        /*//ジャンプ
-        if(up == true){
-            y--;
-            var huga = 0;
-            var hoge = setInterval(function() {
-                huga++;
-                y++;
-                //終了条件
-                if (huga == 1) {
-                    clearInterval(hoge);
-                }
-            }, 100);
-            // while(upcount<50) {
-            //     upcount++;
-            // }
-            // do{
-            //     y++;
-            //     upcount--;
-            // }while(upcount == -1);{
-            //     upcount++
-            //     up = false;
-            // }
-        }
-        */
-
         //パス設定開始
         ctx.beginPath();
 
@@ -142,6 +117,7 @@ function keyDown(event){
     }
 }
 
+// ジャンプ処理
 function jump(){
     if (up) {
         y_nex = y;
