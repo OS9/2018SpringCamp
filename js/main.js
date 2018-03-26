@@ -1,6 +1,6 @@
 var screenCanvas,info;
 var run = true;
-var fps = 200;
+var fps = 50;
 var ctx;
 var x = 60;
 var y = 540;
@@ -43,11 +43,21 @@ window.onload = function() {
         // screenクリア 
         ctx.clearRect(0, 0, screenCanvas.width, screenCanvas.height);
 
+<<<<<<< HEAD
+        //カウンター
+        //経過時間と開始判定
+        if(start == true){
+            do{
+                y++;
+                switch(true){
+                    case (x > 0 && x < 512 && y < 256):
+=======
         //経過時間と開始判定
         if(start == true){
             do{
                 switch(true){
                     case (x > 0 && x < 600 && y > 0):
+>>>>>>> test
                         counter++
                         message = counter;
                         break;
@@ -62,7 +72,10 @@ window.onload = function() {
                         y=540;
                         break;
 
+<<<<<<< HEAD
+=======
                     // First Start
+>>>>>>> test
                     case start == true:
                         counter=0;
                         //自機の初期位置
@@ -117,7 +130,6 @@ function keyDown(event){
         counter = 0;
     }
 }
-
 
 //ステージ
 var stage = 0;
