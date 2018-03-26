@@ -5,7 +5,6 @@ var ctx;
 var x = 256;
 var y = 200;
 var up = false;
-var pattern = 3;
 
 //main
 window.onload = function() {
@@ -39,13 +38,7 @@ window.onload = function() {
         info.innerHTML = 'SCORE ' + counter;
         
         // screenクリア 
-        ctx.clearRect(0, 0, screenCanvas.width, screenCanvas.height);
-        
-        var pattern = new Array(3);
-        for(i = 0; i < pattern.length; i++){
-            pattern[i] = (Math.random() * 3) + 1; 
-        }
-        
+        ctx.clearRect(0, 0, screenCanvas.width, screenCanvas.height);        
         
         //パス設定開始
         ctx.beginPath();
