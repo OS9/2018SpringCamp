@@ -47,7 +47,7 @@ window.onload = function() {
         if(start == true){
             do{
                 switch(true){
-                    case (x > 0 && x < 512 && y > 0):
+                    case (x > 0 && x < 600 && y > 0):
                         counter++
                         message = counter;
                         break;
