@@ -2,8 +2,8 @@ var screenCanvas,info;
 var run = true;
 var fps = 200;
 var ctx;
-var x = 256;
-var y = 200;
+var x = 60;
+var y = 540;
 var up = false;
 var y_pre = 0;
 var y_nex = 0;
@@ -17,8 +17,8 @@ window.onload = function() {
     
     //スクリーン初期化
     screenCanvas = document.getElementById('screen');
-    screenCanvas.width = 512;
-    screenCanvas.height = 256;
+    screenCanvas.width = 600;
+    screenCanvas.height = 600;
     
     //2dコンテキスト
     ctx = screenCanvas.getContext('2d');
@@ -43,54 +43,39 @@ window.onload = function() {
         // screenクリア 
         ctx.clearRect(0, 0, screenCanvas.width, screenCanvas.height);
 
-        //カウンター
-        //counter++;
         //経過時間と開始判定
         if(start == true){
             do{
-                /*if( x < 0 || x > 512 || y < 0){
-                    message = "GAME OVER";
-                    start = false;
-                    x=256;
-                    y=200;
-                    break;
-                }*/
-
                 switch(true){
                     case (x > 0 && x < 512 && y > 0):
                         counter++
                         message = counter;
                         break;
                         
+                    // Game Over and Restart
                     case start == true: 
-                        //(x < 0 || x > 512 || y < 0):
                         message = "GAME OVER";
                         counter = 0;
                         start = false;
-                        x=256;
-                        y=200;
+                        //自機の初期位置
+                        x=60;
+                        y=540;
                         break;
 
-                    /*case counter < 500:
-                        message = counter;
-                        break;
-                    
-                    case counter < 600:
-                        message = counter + "  GAME OVER";
-                        start = false;
-                        break;
-                    */
-
+                    // First Start
                     case start == true:
                         counter=0;
-                        x=256;
-                        y=200;
+                        //自機の初期位置
+                        x=60;
+                        y=540;
                         break;     
                 }
             }while(i>0);  
         }
 
+        //ジャンプ
         jump();
+
         //パス設定開始
         ctx.beginPath();
         
@@ -136,8 +121,8 @@ function keyDown(event){
 
 //ステージ
 var stage = 0;
-var stageX = 512;
-var stageY = 210;
+var stageX = 600;
+var stageY = 550;
 // let rand = (Math.random() * 50) + 1;
 function drawRoad(/*rand*/) {
     ctx.beginPath();
@@ -153,7 +138,7 @@ function vanishRoad() {
     ctx.beginPath();
     ctx.fillRect(
         stage = stageX -= 20,
-        stage = 256,
+        stage = 600,
         20,256
     );
     ctx.closePath();    
@@ -165,7 +150,7 @@ function drawStage(drw_nmb) {
     }
     vanishRoad();
     if(stageX==0) {
-        stageX=512;
+        stageX=screenCanvas.width;
     }
 }
 
@@ -191,11 +176,11 @@ function jump(){
         y_nex = y;
         y += (y-y_pre)+1;
         y_pre = y_nex;
-        if(y==50) {
+        if(y==150) {
             up = !up;
         }
-        if(y>200) {
-            y = 200;
+        if(y>540) {
+            y = 540;
         }
     }
 }
