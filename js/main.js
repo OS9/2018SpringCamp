@@ -6,6 +6,8 @@ var x = 256;
 var y = 200;
 var up = false;
 var right = false;
+var y_pre = 0;
+var y_nex = 0;
 
 //main
 window.onload = function() {
@@ -78,7 +80,7 @@ window.onload = function() {
 
         //カウンター
         switch(true){
-            case counter < 1000:
+            case counter < 500:
             counter++;
             break;
 
@@ -86,6 +88,8 @@ window.onload = function() {
             run = false;
             break;
         }
+
+        jump();
 
         /*//ジャンプ
         if(up == true){
@@ -110,7 +114,7 @@ window.onload = function() {
             //     up = false;
             // }
         }
-*/
+        */
 
         //パス設定開始
         ctx.beginPath();
@@ -134,9 +138,20 @@ function keyDown(event){
     // →キー
     if(key === 39){x+=5; console.log('x');}
     // ↑キー
-    if(key === 38){up = true; console.log('y');
+    if(key === 38){up = true; y_pre = y; y = y - 20; console.log('y');
     }
 }
 
-function jump(j){
+function jump(){
+    if (up) {
+        y_nex = y;
+        y += (y-y_pre)+1;
+        y_pre = y_nex;
+        if(y==50) {
+            up = !up;
+        }
+        if(y>200) {
+            y = 200;
+        }
+    }
 }
