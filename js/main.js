@@ -19,17 +19,19 @@ window.onload = function() {
     var counter = 0;
     var i,j;
     //BGM関連
-    var audio = new Audio();
-
-    //audio.preload = "none";
+    var audio = new Audio(), audio1 = new Audio();
+    audio1.setAttribute("loop", true);
 
     audio.addEventListener("loadstart", function(e) {
-        audio.loop = true;
         audio.play();
     });
-    audio.src = "./js/kongyo___1.wav";
+    audio.addEventListener("ended", function(e) {
+        audio1.play();
+    });
 
-    //audio.load();
+    audio.src = "./wav/kongyo___1.wav";
+    audio1.src = "./wav/kongyo___2.wav";
+    audio1.load();
     
     //スクリーン初期化
     screenCanvas = document.getElementById('screen');
