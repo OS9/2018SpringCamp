@@ -1,17 +1,22 @@
 var screenCanvas,info;
 var run = true;
-var fps = 30;
+var fps = 200;
 var ctx;
 var x = 256;
 var y = 200;
 var up = false;
-var right = false;
+var stage;
+var pattern = 3;
+var stageX = 492;
+var stageY = 200;
+var rand;
 
 //main
 window.onload = function() {
     var counter = 0;
     var upcount = 0;
     var i,j;
+
     //スクリーン初期化
     screenCanvas = document.getElementById('screen');
     screenCanvas.width = 512;
@@ -26,65 +31,23 @@ window.onload = function() {
     //エレメント関連
     info = document.getElementById('info');
 
-
-    /*//ボタン
-    var input_key_buffer = new Array();
-    //押されたとき
-    document.onkeydown = function (e){
-        if(!e) e = window.event;
-        console.log("ボタンが押された");
-        input_key_buffer[e.keyCode] = true;
-    };
-    //離れたとき
-    document.onkeyup = function (e){
-        if(!e) e = window.event;
-        console.log("ボタンが離れた");
-        input_key_buffer[e.keyCode] = false;
-    };
-    //ウィンドウが非アクティブ
-    window.onblur = function(){
-        //配列をクリア
-        input_key_buffer.length = 0;
-    };
-
-    function KeyIsDown(keyCode){
-        if(input_key_buffer[key_code])      return true;
-        return false;
+    //ステージ
+    var stage = new Array();
+    for(let k = 0; k < stage.length; k++){
+        stage[k] = new stage();
     }
 
-    setInterval(fanction(){
-        if(KeyIsDown(37)){
-            console.log("←キーが押されている");
-        }else{
-            console.log("←キーが離されている");
-        }
-
-        //スペースキーが押されている
-        if(KeyIsDown(39)){
-            console.log("→キーが押されている");
-        }else{
-            console.log("→キーが離されている");
-        }
-    });*/
-
-
     (function(){
-
+        counter++;
         //HTML更新
         info.innerHTML = 'SCORE ' + counter;
 
         // screenクリア 
         ctx.clearRect(0, 0, screenCanvas.width, screenCanvas.height);
 
-        //カウンター
-        switch(true){
-            case counter < 1000:
-            counter++;
-            break;
-
-            default:
-            run = false;
-            break;
+        var pattern = new Array(3);
+        for(i = 0; i < pattern.length; i++){
+            pattern[i] = (Math.random() * 3) + 1; 
         }
 
         /*//ジャンプ
@@ -120,6 +83,26 @@ window.onload = function() {
         
         //色を設定
         ctx.fillStyle = 'rgba(0, 0, 255, 0.75)';
+        ctx.fill();
+
+        ctx.closePath;
+
+        //ステージ
+        while(i<30000){
+            rand = (Math.random() * 50) + 1;
+            ctx.beginPath();
+            ctx.fillRect(
+                stage[i] = stageX-=20,
+                stage[i] = stageY + rand,
+                20,256
+            );
+            // console.log(i);
+            ctx.closePath();
+            i++;
+        }
+
+        //色を設定
+        ctx.fillStyle = 'red';
         ctx.fill();
 
         if(run){setTimeout(arguments.callee,fps);}
