@@ -48,11 +48,12 @@ window.onload = function() {
     info = document.getElementById('info');
 
     //ランダム地形を配列に保存
-    var rndLnd = [20];
-    for (let i = 0; i < rndLnd.length; i++) {
-        var drwRnd = (Math.random()*1) + 3;
-        rndLnd[i] = drwRnd;        
-    }
+    var drwRnd = (Math.random()*1) + 3;
+    // var rndLnd = [20];
+    // for (let i = 0; i < rndLnd.length; i++) {
+    //     var drwRnd = (Math.random()*1) + 3;
+    //     rndLnd[i] = drwRnd;        
+    // }
 
 
     var timer = setInterval(function() {
@@ -65,10 +66,11 @@ window.onload = function() {
         //経過時間と開始判定
         if(start == true){
             //ステージ 
-            updateStage(rndLnd);
+            // updateStage(rndLnd);
+            updateStage(drwRnd);
             do{
                 switch(true){
-                    case (x > 0 && x < 600 && y > 0):
+                    case (x > 0 && x < 600 && y < 600 && y > 0):
                         counter++
                         message = counter;
                         break;
@@ -92,7 +94,7 @@ window.onload = function() {
                         break;     
                 }
                 //ジャンプ
-                jump();
+                jump(drwRnd);
             }while(i>0);  
         }
 
@@ -148,7 +150,7 @@ function drawRoad(drw_nmb) {
 }
 
 function nextRoad(drw_nmb) {
-    let drwRd = stage_now_x+100*(drw_nmb-1);
+    let drwRd = stage_now_x+100*drw_nmb;
     ctx.beginPath();
     ctx.fillRect(
         drwRd+100*drw_nmb,stageY/* + rand*/,
@@ -159,8 +161,10 @@ function nextRoad(drw_nmb) {
 
 function drawStage(drw_nmb) {
     drawRoad(drw_nmb);
-    nextRoad(drw_nmb+1);
-    if(stage_now_x < -(100*drw_nmb+100*(drw_nmb+1)*2)) {
+    // nextRoad(drw_nmb+1);
+    nextRoad(drw_nmb);
+    // if(stage_now_x < -(100*drw_nmb+100*(drw_nmb+1)*2)) {
+    if(stage_now_x < -(100*drw_nmb*3)) {
         stage_now_x=screenCanvas.width;
     }
 }
@@ -172,9 +176,10 @@ function moveStage() {
 }
 
 function generateStage(rndLnd) {
-    for (let i = 0; i < rndLnd.length; i++) {        
-        drawStage(rndLnd[i]);
-    }
+    // for (let i = 0; i < rndLnd.length; i++) {        
+    //     drawStage(rndLnd[i]);
+    // }
+    drawStage(rndLnd);    
 }
 
 function updateStage(rndLnd) {
@@ -183,7 +188,7 @@ function updateStage(rndLnd) {
 }
 
 // ジャンプ処理
-function jump(){
+function jump(drw_nmb){
     if (up) {
         y_nex = y;
         y += (y-y_pre)+2;
@@ -191,8 +196,12 @@ function jump(){
         if(y==150) {
             up = !up;
         }
-        if(y>540) {
-            y = 540;
+        if(y>600) {
+            if(x > stage_now_x && x < drw_nmb){
+                y = 540;
+            }else{
+                y = 600;
+            }
         }
     }
 }
