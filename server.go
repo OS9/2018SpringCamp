@@ -1,29 +1,14 @@
 package main
 
 import (
-  "net/http"
-  "text/template"
+    "log"
+    "net/http"
 )
 
-type Page struct {
-  Title string
-  Count int
-}
-
-func viewHandler(w http.ResponseWriter, r *http.Request) {
-  page := Page{"Hello World.", 1}
-  tmpl, err := template.ParseFiles("loop.html") // ParseFilesを使う
-  if err != nil {
-    panic(err)
-  }
-
-  err = tmpl.Execute(w, page)
-  if err != nil {
-    panic(err)
-  }
-}
-
 func main() {
-  http.HandleFunc("/", viewHandler) // hello
-  http.ListenAndServe(":8080", nil)
+    http.Handle("/", http.FileServer(http.Dir("static")))
+
+    if err := http.ListenAndServe(":8686", nil); err != nil {
+        log.Fatal("ListenAndServe: ", err)
+    }
 }
