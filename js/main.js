@@ -29,8 +29,8 @@ window.onload = function() {
         audio1.play();
     });
 
-    audio.src = "./wav/kongyo___1.wav";
-    audio1.src = "./wav/kongyo___2.wav";
+    audio.src = "./wav/kongyo1.wav";
+    audio1.src = "./wav/kongyo2.wav";
     audio1.load();
     
     //スクリーン初期化
