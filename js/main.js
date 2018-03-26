@@ -18,6 +18,18 @@ var stage_now_x = 0;
 window.onload = function() {
     var counter = 0;
     var i,j;
+    //BGM関連
+    var audio = new Audio();
+
+    //audio.preload = "none";
+
+    audio.addEventListener("loadstart", function(e) {
+        audio.loop = true;
+        audio.play();
+    });
+    audio.src = "./js/kongyo___1.wav";
+
+    //audio.load();
     
     //スクリーン初期化
     screenCanvas = document.getElementById('screen');
@@ -182,3 +194,4 @@ function jump(){
         }
     }
 }
+
