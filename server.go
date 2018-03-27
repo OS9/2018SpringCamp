@@ -1,15 +1,11 @@
 package main
 
 import (
-    "os"
-    "fmt"
-    "text/template"
+    "log"
+    "net/http"
 )
 
 func main() {
-	var t = template.Must(template.ParseFiles("loop.html")) // 外部テンプレートファイルの読み込み
-    
-	if err := t.Execute(os.Stdout, nil); err != nil { // テンプレート出力
-        fmt.Println(err.Error())
-    }
+    http.Handle("/static/", http.StripPrefix("/static/", http.FileServer(http.Dir("."))))
+    log.Fatal(http.ListenAndServe(":8080", nil))
 }
